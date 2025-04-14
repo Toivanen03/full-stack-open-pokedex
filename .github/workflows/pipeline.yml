@@ -10,6 +10,8 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
           - uses: actions/checkout@v4
+          - name: Make build script executable
+            run: chmod +x build_step.sh
           - name: Build script
             run: ./build_step.sh
           - name: Trigger deployment
