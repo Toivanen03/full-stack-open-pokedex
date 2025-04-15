@@ -6,6 +6,8 @@ import ErrorMessage from './ErrorMessage'
 import PokemonPage from './PokemonPage'
 import PokemonList from './PokemonList'
 
+// Testikommentti koodin muuttamiseksi
+
 const mapResults = (({ results }) => results.map(({ url, name }) => ({
   url,
   name,
