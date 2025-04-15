@@ -1,9 +1,9 @@
 name: Deployment pipeline
-
 on:
   push:
   pull_request:
     types: [opened, synchronize]
+
 jobs:
   hello_world_job:
     runs-on: ubuntu-20.04
@@ -17,6 +17,7 @@ jobs:
         run: date
       - name: List directory
         run: ls -l
+
   end-to-end_tests:
     needs: hello_world_job
     timeout-minutes: 60
@@ -36,7 +37,8 @@ jobs:
       if: always()
       with:
         name: playwright-report
-        path: playwright-report/    
+        path: playwright-report/
+
   deployment_pipeline:
     needs: end-to-end_tests
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -49,7 +51,9 @@ jobs:
         id: build_script
         run: ./build_step.sh
       - name: Trigger deployment
+        if: (!contains(join(github.event.commits.*.message, ' '), '#skip'))
         run: curl -f https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+
   bump_version:
     needs: deployment_pipeline
     if: ${{ success() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
