@@ -2,9 +2,7 @@ name: Deployment pipeline
 
 on:
   push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
     types: [opened, synchronize]
 jobs:
   hello_world_job:
@@ -34,21 +32,33 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
-      if: always()
     - uses: actions/upload-artifact@v4
+      if: always()
       with:
         name: playwright-report
         path: playwright-report/    
   deployment_pipeline:
-      needs: end-to-end_tests
-      runs-on: ubuntu-20.04
-      steps:
-        - uses: actions/checkout@v4
-        - name: Make build script executable
-          run: chmod +x build_step.sh
-        - name: Build script
-          id: build_script
-          run: ./build_step.sh
-        - name: Trigger deployment
-          if: ${{ success() && github.event_name == 'push' }}
-          run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+    needs: end-to-end_tests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make build script executable
+        run: chmod +x build_step.sh
+      - name: Build script
+        id: build_script
+        run: ./build_step.sh
+      - name: Trigger deployment
+        run: curl -f https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+  bump_version:
+    needs: deployment_pipeline
+    if: ${{ success() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
