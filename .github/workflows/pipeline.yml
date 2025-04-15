@@ -99,10 +99,13 @@ jobs:
         uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
         with:
           args: |
-            ${{ github.actor }} made a ${{ github.event_name }} on ${{ github.repository }}.
-            Commit: ${{ github.sha }}
-            Status:
-            - E2E Tests: ${{ needs.end-to-end_tests.result }}
-            - Jest/Lint: ${{ needs.other_tests.result }}
-            - Deployment: ${{ needs.deployment.result }}
-            - Version bump: ${{ needs.bump_version.result }}
+            **@simotoivanentivi23v0603**
+
+            *${{ github.actor }}* made a ${{ github.event_name }} on **${{ github.repository }}**.
+
+            **Commit:** \`\`${{ github.sha }}\`\`
+            **Status:**
+            - **E2E Tests:** ${{ needs.end-to-end_tests.result }}
+            - **Jest/Lint:** ${{ needs.other_tests.result }}
+            - **Deployment:** ${{ needs.deployment.result }}
+            - **Version bump:** ${{ needs.bump_version.result }}
