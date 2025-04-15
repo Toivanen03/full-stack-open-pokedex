@@ -19,6 +19,7 @@ jobs:
         run: ls -l
 
   end-to-end_tests:
+    name: end-to-end_tests
     needs: hello_world_job
     timeout-minutes: 60
     runs-on: ubuntu-22.04
@@ -43,6 +44,7 @@ jobs:
         if: always()
 
   other_tests:
+    name: other_tests
     needs: end-to-end_tests
     runs-on: ubuntu-22.04
     steps:
