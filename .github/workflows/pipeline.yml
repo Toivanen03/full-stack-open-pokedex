@@ -91,8 +91,26 @@ jobs:
 
   discord_notify:
     needs: [end-to-end_tests, other_tests, deployment, bump_version]
+    if: always()
     runs-on: ubuntu-22.04
     steps:
+      - name: Set status emoji
+        id: set-status
+        run: |
+          function status_emoji() {
+            case "$1" in
+              success) echo "✅ success" ;;
+              failure) echo "❌ failure" ;;
+              cancelled) echo "⚠️ cancelled" ;;
+              *) echo "❓ $1" ;;
+            esac
+          }
+
+          echo "e2e_status=$(status_emoji '${{ needs.end-to-end_tests.result }}')" >> $GITHUB_OUTPUT
+          echo "other_status=$(status_emoji '${{ needs.other_tests.result }}')" >> $GITHUB_OUTPUT
+          echo "deploy_status=$(status_emoji '${{ needs.deployment.result }}')" >> $GITHUB_OUTPUT
+          echo "bump_status=$(status_emoji '${{ needs.bump_version.result }}')" >> $GITHUB_OUTPUT
+
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -104,8 +122,9 @@ jobs:
             *${{ github.actor }}* made a ${{ github.event_name }} on **${{ github.repository }}**.
 
             **Commit:** [View commit](https://github.com/Toivanen03/full-stack-open-pokedex/commit/${{ github.sha }})
+
             **Status:**
-            - **E2E Tests:** ${{ needs.end-to-end_tests.result }}
-            - **Jest/Lint:** ${{ needs.other_tests.result }}
-            - **Deployment:** ${{ needs.deployment.result }}
-            - **Version bump:** ${{ needs.bump_version.result }}
+            - **E2E Tests:** ${{ steps.set-status.outputs.e2e_status }}
+            - **Jest/Lint:** ${{ steps.set-status.outputs.other_status }}
+            - **Deployment:** ${{ steps.set-status.outputs.deploy_status }}
+            - **Version bump:** ${{ steps.set-status.outputs.bump_status }}

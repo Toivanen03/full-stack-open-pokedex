@@ -1,11 +1,11 @@
-name: Deployment pipeline
+name: Health check
 
 on:
   push:
   pull_request:
     types: [opened, synchronize]
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 6 * * *'
 
 jobs:
   health_check:
@@ -19,3 +19,36 @@ jobs:
           max-attempts: 2
           retry-delay: 15s
           retry-all: true
+      - name: Print trigger type
+        run: echo "Triggered by ${{ github.event_name }}"
+
+  discord_notify:
+    needs: [health_check]
+    if: always()
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set status emoji
+        id: set-status
+        run: |
+          function status_emoji() {
+          case "$1" in
+            success) echo "✅ success" ;;
+            failure) echo "❌ failure" ;;
+            cancelled) echo "⚠️ cancelled" ;;
+            *) echo "❓ $1" ;;
+          esac
+          }
+
+          echo "health_check_status=$(status_emoji '${{ needs.health_check.result }}')" >> $GITHUB_OUTPUT
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
+        with:
+          args: |
+            **@simotoivanentivi23v0603**
+
+            *Health on rendering ${{ github.repository }}:**
+
+            **Health status:** ${{ steps.set-status.outputs.health_check_status }}
