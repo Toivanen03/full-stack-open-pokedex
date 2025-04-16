@@ -117,14 +117,16 @@ jobs:
         uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
         with:
           args: |
-            **@simotoivanentivi23v0603**
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            @simotoivanentivi23v0603  
 
-            *${{ github.actor }}* made a ${{ github.event_name }} on **${{ github.repository }}**.
+            *${{ github.actor }}* made a ${{ github.event_name }} on **${{ github.repository }}**.  
 
-            **Commit:** [View commit](<https://github.com/Toivanen03/full-stack-open-pokedex/commit/${{ github.sha }}>)
+            **Commit:** [View commit](<https://github.com/Toivanen03/full-stack-open-pokedex/commit/${{ github.sha }}>)  
 
             **Status:**
-            - **E2E Tests:** ${{ steps.set-status.outputs.e2e_status }}
-            - **Jest/Lint:** ${{ steps.set-status.outputs.other_status }}
-            - **Deployment:** ${{ steps.set-status.outputs.deploy_status }}
-            - **Version bump:** ${{ steps.set-status.outputs.bump_status }}
+            🔹 **E2E Tests:** ${{ steps.set-status.outputs.e2e_status }}  
+            🔹 **Jest/Lint:** ${{ steps.set-status.outputs.other_status }}  
+            🔹 **Deployment:** ${{ steps.set-status.outputs.deploy_status }}  
+            🔹 **Version bump:** ${{ steps.set-status.outputs.bump_status }}  
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
