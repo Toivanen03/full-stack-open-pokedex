@@ -49,6 +49,6 @@ jobs:
           args: |
             **@simotoivanentivi23v0603**
 
-            *Health on rendering ${{ github.repository }}:**
+            *Health on rendering [${{ github.repository }}](<https://github.com/${{ github.repository }}>)*
 
             **Health status:** ${{ steps.set-status.outputs.health_check_status }}

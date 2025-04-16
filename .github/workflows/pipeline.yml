@@ -121,7 +121,7 @@ jobs:
 
             *${{ github.actor }}* made a ${{ github.event_name }} on **${{ github.repository }}**.
 
-            **Commit:** [View commit](https://github.com/Toivanen03/full-stack-open-pokedex/commit/${{ github.sha }})
+            **Commit:** [View commit](<https://github.com/Toivanen03/full-stack-open-pokedex/commit/${{ github.sha }}>)
 
             **Status:**
             - **E2E Tests:** ${{ steps.set-status.outputs.e2e_status }}
