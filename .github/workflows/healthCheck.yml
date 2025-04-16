@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [opened, synchronize]
   schedule:
-    - cron: '0 7 * * *'
+    - cron: '0 8 * * *'
 
 jobs:
   health_check:
@@ -44,10 +44,10 @@ jobs:
         uses: Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9
         with:
           args: |
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            ━━━━━━━━━━━━━━━━━━━━━━━
             @simotoivanentivi23v0603  
               
             🔹 **Health on rendering** *[${{ github.repository }}](<https://github.com/${{ github.repository }}>)*  
             🔹 **Triggered by** *${{ github.event_name }}*  
             🔹 **Health status:** *${{ steps.set-status.outputs.health_check_status }}*  
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            ━━━━━━━━━━━━━━━━━━━━━━━
