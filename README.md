@@ -1,15 +1,16 @@
-# Full Stack open CI/CD
+# Full Stack Open 2024 – Harjoituksia
 
-This repository is used for the CI/CD module of the Full stack open course
+Tämä repositorio on osa [Full Stack Open](https://fullstackopen.com/) -verkkokurssin harjoituksia JavaScriptin, Reactin, Node.js:n ja muiden teknologioiden avulla.
 
-Fork the repository to complete course exercises
+📚 Kurssin aiheita mm.:
+- React-käyttöliittymät
+- Node.js ja Express-palvelimet
+- REST API:t ja tietokannat (MongoDB, PostgreSQL)
+- Sovellusarkkitehtuuri, autentikointi
+- CI/CD ja testaus
 
-## Commands
+💡 Tämä koodi on kirjoitettu oppimistarkoituksessa ja vastaa kunkin kurssiosion tehtäviä.
 
-Start by running `npm install` inside the project folder
+---
 
-`npm start` to run the webpack dev server
-`npm test` to run tests
-`npm run eslint` to run eslint
-`npm run build` to make a production build
-`npm run start-prod` to run your production build
+🛠️ Kurssin aikana kehitetty koodi kuvastaa opitun soveltamista käytännössä.
